@@ -4,7 +4,7 @@ function mainController($scope, $http) {
 	$scope.formData = {};
 	// Get & show all todo items when on landing page
 	$http.get('/api/todos')
-		.sucess(function(data) {
+		.success(function(data) {
 			$scope.todos = data;
 			console.log(data);
 		})
@@ -14,11 +14,11 @@ function mainController($scope, $http) {
 	// When add form submitted, sends text to Node API
 	$scope.createTodo = function() {
 		$http.post('/api/todos/', $scope.formData)
-			.success(function(data)) {
+			.success(function(data) {
 				$scope.formData = {}; // Clears the form data, prepping for another user request
 				$scope.todos = data;
 				console.log(data);
-			}
+			})
 			.error(function(data) {
 				console.log('Error: ' + data);
 			});
@@ -32,6 +32,6 @@ function mainController($scope, $http) {
 			})
 			.error(function(data) {
 				console.log('Error: ' + data);
-			})
+			});
 	};
 }
