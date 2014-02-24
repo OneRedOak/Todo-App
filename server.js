@@ -1,9 +1,9 @@
-// Initial Setup -----------------------------------------
+// Initial Setup ---------------------------------------------------------------
 var express = require('express');
 var app = express();
 var mongoose = require('mongoose');
 
-// Configuration -----------------------------------------
+// Configuration ---------------------------------------------------------------
 mongoose.connect('mongodb://node:node@mongo.onmodulus.net:27017/uwO3mypu'); // Scotch.io tutorial - test database
 
 app.configure(function() {
@@ -13,16 +13,12 @@ app.configure(function() {
 	app.use(express.methodOverride()); // Simulates DELET and PUT
 });
 
-// Models -----------------------------------------
+// Models ----------------------------------------------------------------------
 var Todo = mongoose.model('Todo', {
 	text: String
 });
 
-// Listen - Node app -----------------------------------------
-app.listen(8080);
-console.log('App is listning on port 8080');
-
-// Routes -----------------------------------------
+// Routes ----------------------------------------------------------------------
 	// Api ---------------------------------------------------------------------
 	// Get all todos
 	app.get('/api/todos', function(req, res) {
@@ -66,3 +62,12 @@ console.log('App is listning on port 8080');
 			});
 		});
 	});
+
+// Application -----------------------------------------------------------------
+app.get('*', function(req, res) {
+	res.sendfile('./public/index.html'); // Loads the single view file, where th efront-end framework will handle the rest
+});
+
+// Listen - Node app -----------------------------------------------------------
+app.listen(8080);
+console.log('App is listning on port 8080');
