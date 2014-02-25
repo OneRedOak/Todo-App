@@ -4,7 +4,8 @@ var app = express();
 var mongoose = require('mongoose');
 
 // Configuration ---------------------------------------------------------------
-mongoose.connect('mongodb://node:node@mongo.onmodulus.net:27017/uwO3mypu'); // Scotch.io tutorial - test database
+var database = require('./config/database'); // Loads database config file
+mongoose.connect(database.url); // Connects to database
 
 app.configure(function() {
 	app.use(express.static(__dirname + '/public')); // Sets static files' location from /public/example to /example
