@@ -1,33 +1,29 @@
 angular.module('todoController', [])
-	.controller('mainController', function($scope, $http) {
+	.controller('mainController', function($scope, $http, Todos) {
 		$scope.formData = {};
+		// GET -------------------------------------------------------------
 		// Get & show all todo items when on landing page
-		$http.get('/api/todos')
+		Todos.get()
 			.success(function(data) {
 				$scope.todos = data;
 			})
-			.error(function(data) {
-				console.log('Error:' + data);
-			});
+		// Create ----------------------------------------------------------
 		// When add form submitted, sends text to Node API
 		$scope.createTodo = function() {
-			$http.post('/api/todos/', $scope.formData)
-				.success(function(data) {
-					$scope.formData = {}; // Clears the form data, prepping for another user request
-					$scope.todos = data;
-				})
-				.error(function(data) {
-					console.log('Error: ' + data);
-				});
+			if(!$.isEmptyObject($scope.formData)) { // Validates formData, prevents empty form submition
+				Todos.create($scope.formData)
+					.success(function(data) {
+						$scope.formData = {}; // Clears the form data, prepping for another user request
+						$scope.todos = data;
+					});
+			}
 		};
+		// Delete ----------------------------------------------------------
 		// Delete a todo item after checking it
 		$scope.deleteTodo = function(id) {
-			$http.delete('/api/todos/' + id)
-				.success(function(data) {
-					$scope.todos = data;
-				})
-				.error(function(data) {
-					console.log('Error: ' + data);
+			Todos.delete(id)
+				.success(function(data) { // On success, calls GET on new list of todos
+					$scope.todos = data; // Assigns new list of todos
 				});
 		};
 	});
