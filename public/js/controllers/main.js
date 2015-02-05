@@ -26,4 +26,14 @@ angular.module('todoController', [])
 					$scope.todos = data; // Assigns new list of todos
 				});
 		};
+
+		$scope.getTextToCopy = function() {
+        	return "ngClip is awesome!";
+    	};
+
+	    $scope.doSomething = function() {
+	        console.log("NgClip...");
+	    };
+
+
 	});

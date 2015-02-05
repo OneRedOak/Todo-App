@@ -1,1 +1,1 @@
-angular.module('angularTodo', ['todoController', 'todoService']);
+angular.module('angularTodo', ['todoController', 'todoService', 'ngClipboard']);
